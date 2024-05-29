@@ -20,7 +20,7 @@ module pipeFittingAssembly(
     pipe_surfaces = def_pipe_surfaces
 ) {
     // Preview modifiers for decreasing fractal number, enabling counter-zfighting, and removing extensions in preview
-    $fn = $preview ? 16 : 64;
+    $fn = $preview ? 16 : 32;
     z_fite = $preview ? 0.05 : 0;
     pipe_extensions = $preview ? pipe_length * 2 : 0;
 
@@ -37,7 +37,7 @@ module pipeFittingAssembly(
 
     mainFitting(pipe_fit_dia, pipe_fit_length, pipe_tol, gasket_seat_width, gasket_seat_depth, thread_length, thread_tol, pipe_surfaces);
 
-// Nuts and Gaskets Assembly
+   // Nuts and Gaskets Assembly
    // Nuts
     translate([0,0,middle_section_distance+thread_length+thread_length+nut_spacing]) 
     pfNut(pipe_dia, pipe_length, pipe_tol, nut_end_thickness, nut_circle_depression, gasket_seat_width, gasket_seat_depth, thread_length, thread_depth, thread_tol);

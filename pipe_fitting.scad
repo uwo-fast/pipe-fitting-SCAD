@@ -40,7 +40,7 @@ def_gasket_min_thickness = 3;
 def_gasket_seat_depth = 19;
 def_gasket_seat_width = 9.5;
 def_thread_length = 40;
-def_thread_depth = 15;
+def_thread_depth = 10;
 def_thread_tol = 0.04;
 def_nut_end_thickness = 5;
 def_nut_circle_depression = 5;
@@ -108,12 +108,15 @@ module mainFitting(
     fitting_total_outer_dia = middle_section_outer_dia + thread_depth;
 
 
-    color("DarkSlateGray", alpha=0.5) 
+    color("DarkSlateGray", alpha=1.0) 
     difference() {
         union() {
             ScrewThread(fitting_total_outer_dia, thread_length, tolerance=thread_tol, tip_height=2, tip_min_fract=3/4);
+            cylinder(h=thread_length, r=fitting_total_outer_dia/2-thread_depth-thread_tol);
+
             translate([0,0,thread_length]) 
             cylinder(middle_section_distance, middle_section_outer_dia/2, middle_section_outer_dia/2, $fn=pipe_surfaces);
+            
             translate([0,0,middle_section_distance+thread_length+thread_length]) 
             rotate([180,0,0]) 
             ScrewThread(fitting_total_outer_dia, thread_length, tolerance=thread_tol, tip_height=2, tip_min_fract=3/4);
@@ -144,6 +147,7 @@ module pfNut(
     thread_length = def_thread_length,
     thread_depth = def_thread_depth, 
     thread_tol = def_thread_tol, 
+    scale = 1,
 ) {
     z_fite = $preview ? 0.05 : 0;
 
@@ -153,7 +157,7 @@ module pfNut(
     middle_section_outer_dia = pipe_fit_dia + gasket_seat_width*2;
     fitting_total_outer_dia = middle_section_outer_dia + thread_depth;
 
-    outer_dia = fitting_total_outer_dia;
+    outer_dia = fitting_total_outer_dia*scale;
 
     color("SteelBlue", alpha=0.5)
     union() {
