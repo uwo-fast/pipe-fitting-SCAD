@@ -40,20 +40,20 @@ module pipeFittingAssembly(
    // Nuts and Gaskets Assembly
    // Nuts
     translate([0,0,middle_section_distance+thread_length+thread_length+nut_spacing]) 
-    pfNut(pipe_dia, pipe_length, pipe_tol, nut_end_thickness, nut_circle_depression, gasket_seat_width, gasket_seat_depth, thread_length, thread_depth, thread_tol);
+    pfNut(pipe_dia, pipe_tol, nut_end_thickness, nut_circle_depression, gasket_seat_width, gasket_seat_depth, thread_length, thread_depth, thread_tol);
 
     translate([0,0,-nut_spacing]) 
     rotate([180,0,0]) 
-    pfNut(pipe_dia, pipe_length, pipe_tol, nut_end_thickness, nut_circle_depression, gasket_seat_width, gasket_seat_depth, thread_length, thread_depth, thread_tol);
+    pfNut(pipe_dia, pipe_tol, nut_end_thickness, nut_circle_depression, gasket_seat_width, gasket_seat_depth, thread_length, thread_depth, thread_tol);
 
     // Gaskets
     translate([0,0,-gasket_spacing])
-    pfGasket(pipe_dia, pipe_length, pipe_tol, gasket_depth, gasket_width, gasket_min_thickness);
+    pfGasket(pipe_dia, pipe_tol, gasket_depth, gasket_width, gasket_min_thickness);
 
     translate([0,0,gasket_spacing])
     translate([0,0,middle_section_distance+thread_length+thread_length]) 
     rotate([180,0,0])
-    pfGasket(pipe_dia, pipe_length, pipe_tol, gasket_depth, gasket_width, gasket_min_thickness);
+    pfGasket(pipe_dia, pipe_tol, gasket_depth, gasket_width, gasket_min_thickness);
 }
 
 pipeFittingAssembly();
