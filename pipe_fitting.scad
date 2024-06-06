@@ -28,83 +28,103 @@
  */
 
 
-use <C:\Program Files\OpenSCAD\libraries\threads-scad\threads.scad>;
+use <threads-scad\threads.scad>;
 
-def_pipe_length = 80;
-def_pipe_dia = 25;
-def_pipe_tol = 2;
-def_pipe_thickness = 2;
-def_gasket_depth = 20;
-def_gasket_width = 10;
-def_gasket_min_thickness = 3;
-def_gasket_seat_depth = 19;
-def_gasket_seat_width = 9.5;
-def_thread_length = 40;
-def_thread_depth = 10;
-def_thread_tol = 0.04;
-def_nut_end_thickness = 5;
-def_nut_circle_depression = 5;
-def_nut_spacing = 45;
-def_gasket_spacing = 30;
-def_pipe_surfaces = 8;
+$fn=16;
 
+def_diameter = 10;
 
-module inputPipe(length, dia, thickness, extension, gasket_seat_depth, tol) {
+module inputPipes(diameter=def_diameter, thickness=undef) {
     z_fite = $preview ? 0.05 : 0;
+    thickness = is_undef(thickness) ? diameter / 10 : thickness;    
 
-    translate([0, 0, -extension + tol/2 + gasket_seat_depth])
+
     union() {
         // First cylinder
-        color("PowderBlue", alpha=0.5)
-        difference() {
-
-            cylinder(h=extension, r1=dia/2, r2=dia/2);
-
-            translate([0,0,-z_fite]) 
-            cylinder(h=length + extension*2 + z_fite*2, r1=dia/2 - thickness/2, r2=dia/2 - thickness/2);
-        }
-
-        // Second cylinder
         color("LightCoral")
         difference() {
-            translate([0, 0, extension]) 
-            cylinder(h=length, r1=dia/2, r2=dia/2);
+            cylinder(h=diameter*10, r1=diameter/2, r2=diameter/2);
 
             translate([0,0,-z_fite]) 
-            cylinder(h=length + extension*2 + z_fite*2, r1=dia/2 - thickness/2, r2=dia/2 - thickness/2);
+            cylinder(h=diameter*10 + z_fite*2, r1=diameter/2 - thickness/2, r2=diameter/2 - thickness/2);
         }
 
-        // Third cylinder
-        color("PowderBlue", alpha=0.5)
+        translate([0,0,-diameter*10])
+        // Second cylinder
+        color("PowderBlue")
         difference() {
-            translate([0, 0, extension+length]) 
-            cylinder(h=extension, r1=dia/2, r2=dia/2);
+            cylinder(h=diameter*10, r1=diameter/2, r2=diameter/2);
 
             translate([0,0,-z_fite]) 
-            cylinder(h=length + extension*2 + z_fite*2, r1=dia/2 - thickness/2, r2=dia/2 - thickness/2);
+            cylinder(h=diameter*10 + z_fite*2, r1=diameter/2 - thickness/2, r2=diameter/2 - thickness/2);
         }
     }
 }
 
+inputPipes();
 
+
+
+/*
+
+1. **P vs D**: P = 0.54D + 6.51 
+
+2. **L vs D**: L = 1.35D - 23.11
+
+3. **G vs D**: G = 0.24D - 3.69 
+
+4. **B vs D**: B = 0.24D - 0.40
+
+5. **B0 vs D**: B0 = 0.26D - 0.17
+
+-------------------------------
+
+1. **P vs D**: 
+P = 0.55D + 6.5
+
+2. **L vs D**: 
+L = 1.35D - 23.0
+
+3. **G vs D**: 
+G = 0.25D - 3.5
+
+4. **B vs D**: 
+B = 0.1D - 0.40
+
+5. **B0 vs D**: 
+B0 = 0.25D - 0.15
+
+*/
 module mainFitting(
-    pipe_dia = def_pipe_dia, 
-    pipe_length = def_pipe_length, 
-    pipe_tol = def_pipe_tol,
-    gasket_seat_width = def_gasket_seat_width, 
-    gasket_seat_depth = def_gasket_seat_depth, 
-    thread_length = def_thread_length,
-    thread_depth = def_thread_depth, 
-    thread_tol = def_thread_tol, 
-    pipe_surfaces = def_pipe_surfaces, 
+    pipe_dia = def_diameter, 
+    pipe_tol = undef,
+    gasket_dia1 = undef, 
+    gasket_dia2 = undef, 
+    gasket_height = undef, 
+    thread_length = undef,
+    thread_tol = undef, 
+    thread_pitch = undef,
+    thread_tooth_height = undef,
+    pipe_surfaces = 8, 
 ) {
     z_fite = $preview ? 0.05 : 0;
 
-    pipe_fit_length = pipe_length + pipe_tol;
+    pipe_fit_length = 0.25*pipe_dia - 0.15;
     pipe_fit_dia = pipe_dia + pipe_tol;
-    fitting_total_length = pipe_fit_length + gasket_seat_depth * 2;
+
+
+
+    thread_length = 0.25*pipe_dia - 0.15;
+
+    gasket_dia1 = undef, 
+    gasket_height = thread_length/2;
+
+    fitting_total_length = pipe_fit_length + gasket_height * 2;
+
     middle_section_distance = fitting_total_length - thread_length * 2;
-    middle_section_outer_dia = pipe_fit_dia + gasket_seat_width*2;
+
+    middle_section_outer_dia = pipe_fit_dia + gasket_dia1*2;
+
     fitting_total_outer_dia = middle_section_outer_dia + thread_depth;
 
 
@@ -112,7 +132,7 @@ module mainFitting(
     difference() {
         union() {
             ScrewThread(fitting_total_outer_dia, thread_length, tolerance=thread_tol, tip_height=2, tip_min_fract=3/4);
-            cylinder(h=thread_length, r=fitting_total_outer_dia/2-thread_depth-thread_tol);
+            cylinder(h=thread_length, r=fitting_total_outer_dia/2-thread_tol);
 
             translate([0,0,thread_length]) 
             cylinder(middle_section_distance, middle_section_outer_dia/2, middle_section_outer_dia/2, $fn=pipe_surfaces);
@@ -125,37 +145,35 @@ module mainFitting(
         translate([0,0,0]) 
         union() {
             translate([0,0,-z_fite]) 
-            cylinder(gasket_seat_depth+z_fite, (pipe_fit_dia+gasket_seat_width * 2)/2, pipe_fit_dia/2);
-            translate([0,0,gasket_seat_depth]) 
+            cylinder(gasket_height+z_fite, (pipe_fit_dia+gasket_dia1 * 2)/2, pipe_fit_dia/2);
+            translate([0,0,gasket_height]) 
             cylinder(pipe_fit_length, pipe_fit_dia/2, pipe_fit_dia/2);
-            translate([0,0,gasket_seat_depth+pipe_fit_length+gasket_seat_depth+z_fite]) 
+            translate([0,0,gasket_height+pipe_fit_length+gasket_height+z_fite]) 
             rotate([180,0,0]) 
-            cylinder(gasket_seat_depth+z_fite, (pipe_fit_dia+gasket_seat_width*2)/2, pipe_fit_dia/2);
+            cylinder(gasket_height+z_fite, (pipe_fit_dia+gasket_dia1*2)/2, pipe_fit_dia/2);
         }
     }
 }
 
+mainFitting();
 
 module pfNut(
     pipe_dia = def_pipe_dia, 
-    pipe_length = def_pipe_length, 
     pipe_tol = def_pipe_tol,
     nut_end_thickness = def_nut_end_thickness, 
     nut_circle_depression = def_nut_circle_depression, 
-    gasket_seat_width = def_gasket_seat_width, 
-    gasket_seat_depth = def_gasket_seat_depth, 
+    gasket_dia1 = def_gasket_dia1, 
+    gasket_height = def_gasket_height, 
     thread_length = def_thread_length,
-    thread_depth = def_thread_depth, 
     thread_tol = def_thread_tol, 
     scale = 1,
 ) {
     z_fite = $preview ? 0.05 : 0;
 
-    pipe_fit_length = pipe_length + pipe_tol;
     pipe_fit_dia = pipe_dia + pipe_tol;
 
-    middle_section_outer_dia = pipe_fit_dia + gasket_seat_width*2;
-    fitting_total_outer_dia = middle_section_outer_dia + thread_depth;
+    middle_section_outer_dia = pipe_fit_dia + gasket_dia1*2;
+    fitting_total_outer_dia = middle_section_outer_dia ;
 
     outer_dia = fitting_total_outer_dia*scale;
 
@@ -177,7 +195,6 @@ module pfNut(
 
 module pfGasket(
     pipe_dia = def_pipe_dia, 
-    pipe_length = def_pipe_length, 
     pipe_tol = def_pipe_tol,
     gasket_depth = def_gasket_depth,
     gasket_width = def_gasket_width,
@@ -185,7 +202,6 @@ module pfGasket(
     ) {
     z_fite = $preview ? 0.05 : 0;
     
-    pipe_fit_length = pipe_length + pipe_tol;
     pipe_fit_dia = pipe_dia + pipe_tol;
 
     color("DarkGrey", alpha=0.5) 
