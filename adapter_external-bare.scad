@@ -1,10 +1,14 @@
 /*
+Author: Cameron K. Brooks
+Version: 0.4
+Date: 06.06.2024
+
 Author:     Makrokaba
 Version:    0.3
 Date:       25.05.2020
 
-Changes in V0.3:
-    Put all supported threads in drop-down-combo to avoid input of wrong threads
+Author:     Makrokaba
+Version:    0.0-0.2
 
 Universal MALE-MALE fitting generator
 Can be used to join 2 internal threaded pieces
