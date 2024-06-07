@@ -145,8 +145,6 @@ module create_external_threaded_part(upper_part = true, thread = "M8", turns = 1
     }
 }
 
-create_external_threaded_part(turns=10);
-
 module create_internal_threaded_part(upper_part = true, thread = "M10", style = "Circular", outer_diameter = 0.0,
                                      chamfer = true, turns = 1, min_wall_size = 1.0, corrector = 0.00)
 {
@@ -216,4 +214,10 @@ module hexagon(width, height)
 {
     fudge = 1 / cos(180 / 6);
     cylinder(h = height, r = width / 2 * fudge, $fn = 6);
+}
+
+module hexagon_doubleR(width1, width2, height)
+{
+    fudge = 1 / cos(180 / 6);
+    cylinder(h = height, r1 = width1 / 2 * fudge, r2 = width2 / 2 * fudge, $fn = 6);
 }

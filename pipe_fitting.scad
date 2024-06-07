@@ -8,11 +8,9 @@
  * Description:
  * This script models a comprehensive pipe fitting assembly, including gaskets, threaded nuts, and customizable pipe fittings. 
  * The script now includes new modules for detailed modeling of pipe inputs, main fittings, nuts, and gaskets. 
- * It supports advanced customization for each component, allowing for precise specifications in complex engineering designs.
  *
  * Dependencies:
- * Requires 'threads-scad' library by rcolyer, available at https://github.com/rcolyer/threads-scad
- * Typical Windows Library Path: C:\Program Files\OpenSCAD\libraries\threads-scad\threads.scad
+ * ADD !!!!!!!!!!!!!!!!
  *
  * Usage Notes:
  * Update dimensional variables at the beginning of the script to modify the pipe, gasket, fitting, nuts, and threads. The script caters to a wide range of specifications and is adaptable for various engineering applications.
