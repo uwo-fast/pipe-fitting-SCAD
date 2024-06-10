@@ -58,68 +58,65 @@ fudge = 1 / cos(180 / $fn);
 // Z-Fite
 z_fite = 0.01;
 
-module Adapter_External_Bare(
-    corrector, 
-    upper_thread, upper_turns, upper_wall, upper_chamfer,
-    mid_style, mid_outer_diameter, mid_height, mid_upper_stopper, mid_lower_stopper,
-    lower_diameter, lower_wall, lower_length, lower_mid_outer_chamfer=undef) {
-        
+module Adapter_External_Bare(corrector, upper_thread, upper_turns, upper_wall, upper_chamfer, mid_style,
+                             mid_outer_diameter, mid_height, mid_upper_stopper, mid_lower_stopper, lower_diameter,
+                             lower_wall, lower_length, lower_mid_outer_chamfer = undef)
+{
+
     specs_up = thread_specs(str(upper_thread, "-ext"));
     Dsupport_up = specs_up[2];
     min_mid_outer_dia = (lower_diameter > Dsupport_up) ? lower_diameter : Dsupport_up;
     real_mid_outer_dia = (mid_outer_diameter < min_mid_outer_dia) ? min_mid_outer_dia : mid_outer_diameter;
 
-    real_lower_mid_outer_chamfer = is_undef(lower_mid_outer_chamfer) ? (real_mid_outer_dia - lower_diameter) / 2 : lower_mid_outer_chamfer;
+    real_lower_mid_outer_chamfer =
+        is_undef(lower_mid_outer_chamfer) ? (real_mid_outer_dia - lower_diameter) / 2 : lower_mid_outer_chamfer;
 
-    union() {
-        translate([0, 0, mid_height / 2])
-        create_external_threaded_part(
-            upper_part = true, 
-            thread = upper_thread, 
-            turns = upper_turns,
-            min_wall_size = upper_wall, 
-            chamfer = upper_chamfer, 
-            corrector = corrector
-        );
+    union()
+    {
+        translate([ 0, 0, mid_height / 2 ])
+            create_external_threaded_part(upper_part = true, thread = upper_thread, turns = upper_turns,
+                                          min_wall_size = upper_wall, chamfer = upper_chamfer, corrector = corrector);
 
-        resize([0, 0, mid_height + 0.02]) 
-        create_middle(
-            upper_thread, upper_wall, 
-            mid_style, mid_outer_diameter, mid_height, mid_upper_stopper, mid_lower_stopper,
-            lower_diameter, lower_wall, fudge
-        );
+        resize([ 0, 0, mid_height + 0.02 ])
+            create_middle(upper_thread, upper_wall, mid_style, mid_outer_diameter, mid_height, mid_upper_stopper,
+                          mid_lower_stopper, lower_diameter, lower_wall, fudge);
 
-        difference() {
-            if(mid_style == "Circular") {
-                translate([0, 0, -lower_length - mid_height / 2]) 
-                cylinder(h = lower_length, d = lower_diameter, center = false);
+        difference()
+        {
+            if (mid_style == "Circular")
+            {
+                translate([ 0, 0, -lower_length - mid_height / 2 ])
+                    cylinder(h = lower_length, d = lower_diameter, center = false);
 
-                    translate([0, 0, -real_lower_mid_outer_chamfer - mid_height / 2 ]) 
-                    cylinder(h = real_lower_mid_outer_chamfer, r1 = lower_diameter/2, r2 = real_mid_outer_dia/2);
+                translate([ 0, 0, -real_lower_mid_outer_chamfer - mid_height / 2 ])
+                    cylinder(h = real_lower_mid_outer_chamfer, r1 = lower_diameter / 2, r2 = real_mid_outer_dia / 2);
             }
-            else if(mid_style == "Cone") {
-                    translate([0, 0, -lower_length - mid_height / 2]) 
-                cylinder(h = lower_length, d = lower_diameter, center = false);
+            else if (mid_style == "Cone")
+            {
+                translate([ 0, 0, -lower_length - mid_height / 2 ])
+                    cylinder(h = lower_length, d = lower_diameter, center = false);
             }
-            else {
-                union() {
-                    translate([0, 0, -lower_length - mid_height / 2 ]) 
-                    hexagon(width = lower_diameter, height = lower_length);
-                    
-                    translate([0, 0, -real_lower_mid_outer_chamfer - mid_height / 2 ]) 
-                    hexagon_doubleR(width1 = lower_diameter, width2 = real_mid_outer_dia, height = real_lower_mid_outer_chamfer);
+            else
+            {
+                union()
+                {
+                    translate([ 0, 0, -lower_length - mid_height / 2 ])
+                        hexagon(width = lower_diameter, height = lower_length);
+
+                    translate([ 0, 0, -real_lower_mid_outer_chamfer - mid_height / 2 ]) hexagon_doubleR(
+                        width1 = lower_diameter, width2 = real_mid_outer_dia, height = real_lower_mid_outer_chamfer);
                 }
             }
-            translate([0, 0, -lower_length - mid_height / 2 - z_fite]) 
-            cylinder(h = mid_height + lower_length + z_fite * 2, r = (lower_diameter / 2 - lower_wall) * fudge, center = false);
+            translate([ 0, 0, -lower_length - mid_height / 2 - z_fite ])
+                cylinder(h = mid_height + lower_length + z_fite * 2, r = (lower_diameter / 2 - lower_wall) * fudge,
+                         center = false);
         }
     }
 }
 
-module create_middle(
-    upper_thread, upper_wall, 
-    mid_style, mid_outer_diameter, mid_height, mid_upper_stopper, mid_lower_stopper,
-    lower_diameter, lower_wall, fudge) {
+module create_middle(upper_thread, upper_wall, mid_style, mid_outer_diameter, mid_height, mid_upper_stopper,
+                     mid_lower_stopper, lower_diameter, lower_wall, fudge)
+{
 
     specs_up = thread_specs(str(upper_thread, "-ext"));
     Dsupport_up = specs_up[2];
@@ -127,31 +124,46 @@ module create_middle(
     min_mid_outer_dia = (lower_diameter > Dsupport_up) ? lower_diameter : Dsupport_up;
     real_mid_outer_dia = (mid_outer_diameter < min_mid_outer_dia) ? min_mid_outer_dia : mid_outer_diameter;
 
-    resize([0, 0, mid_height]) 
-    translate([0, 0, -mid_height / 2]) 
-    if (mid_style == "Circular") {
-        difference() {
+    resize([ 0, 0, mid_height ]) translate([ 0, 0, -mid_height / 2 ]) if (mid_style == "Circular")
+    {
+        difference()
+        {
             cylinder(h = mid_height, d = real_mid_outer_dia, center = false);
-            translate([0, 0, -0.001]) 
-            cylinder(h = mid_height + 0.002, r1 = (lower_diameter / 2 - lower_wall) * fudge,
-                     r2 = (Dsupport_up / 2 - upper_wall) * fudge, center = false);
+            translate([ 0, 0, -0.001 ]) if (lower_diameter == 0)
+            {
+                cylinder(h = mid_height + 0.002, r = (Dsupport_up / 2 - upper_wall) * fudge, center = false);
+            }
+            else
+            {
+                cylinder(h = mid_height + 0.002, r1 = (lower_diameter / 2 - lower_wall) * fudge,
+                         r2 = (Dsupport_up / 2 - upper_wall) * fudge, center = false);
+            }
         }
     }
-    else if (mid_style == "Cone") {
-        difference() {
+    else if (mid_style == "Cone")
+    {
+        difference()
+        {
             cylinder(h = mid_height, r1 = lower_diameter / 2 + mid_lower_stopper,
                      r2 = Dsupport_up / 2 + mid_upper_stopper, center = false);
-            translate([0, 0, -0.001]) 
-            cylinder(h = mid_height + 0.002, r1 = (lower_diameter / 2 - lower_wall) * fudge,
-                     r2 = (Dsupport_up / 2 - upper_wall) * fudge, center = false);
+            translate([ 0, 0, -0.001 ]) cylinder(h = mid_height + 0.002, r1 = (lower_diameter / 2 - lower_wall) * fudge,
+                                                 r2 = (Dsupport_up / 2 - upper_wall) * fudge, center = false);
         }
     }
-    else {
-        difference() {
+    else
+    {
+        difference()
+        {
             hexagon(real_mid_outer_dia, mid_height);
-            translate([0, 0, -0.001]) 
-            cylinder(h = mid_height + 0.002, r1 = (lower_diameter / 2 - lower_wall) * fudge,
-                     r2 = (Dsupport_up / 2 - upper_wall) * fudge, center = false);
+            translate([ 0, 0, -0.001 ]) if (lower_diameter == 0)
+            {
+                cylinder(h = mid_height + 0.002, r = (Dsupport_up / 2 - upper_wall) * fudge, center = false);
+            }
+            else
+            {
+                cylinder(h = mid_height + 0.002, r1 = (lower_diameter / 2 - lower_wall) * fudge,
+                         r2 = (Dsupport_up / 2 - upper_wall) * fudge, center = false);
+            }
         }
     }
 }
@@ -179,14 +191,14 @@ test_lower_length = 10;
 test_lower_mid_outer_chamfer = (test_mid_outer_diameter - test_lower_diameter) / 2;
 
 // Call the function with the test variables
-Adapter_External_Bare(
-    test_corrector, // corrector
-    test_upper_thread, test_upper_turns, test_upper_wall, test_upper_chamfer, // Upper External Thread Part
-    test_mid_style, test_mid_outer_diameter, test_mid_height, test_mid_upper_stopper, test_mid_lower_stopper, // Middle Part
-    test_lower_diameter, test_lower_wall, test_lower_length, test_lower_mid_outer_chamfer // Lower Part
+Adapter_External_Bare(test_corrector, // corrector
+                      test_upper_thread, test_upper_turns, test_upper_wall,
+                      test_upper_chamfer, // Upper External Thread Part
+                      test_mid_style, test_mid_outer_diameter, test_mid_height, test_mid_upper_stopper,
+                      test_mid_lower_stopper, // Middle Part
+                      test_lower_diameter, test_lower_wall, test_lower_length,
+                      test_lower_mid_outer_chamfer // Lower Part
 );
-
-
 
 // Compatible Threads:
 // [G1/16, G1/8, G1/4, G3/8, G1/2, G5/8, G3/4, G7/8, G1, G1 1/8, G1 1/4, G1 1/2, G1 3/4, G2, G2 1/4, G2 1/2,
