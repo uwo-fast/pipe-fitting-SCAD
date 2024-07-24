@@ -1,7 +1,7 @@
 /*
-Author: Cameron K. Brooks
-Version: 0.4
-Date: 06.06.2024
+Author:     Cameron K. Brooks
+Version:    0.4
+Date:       06.06.2024
 
 Author:     Makrokaba
 Version:    0.3
@@ -97,7 +97,7 @@ module create_external_threaded_part(upper_part = true, thread = "M8", turns = 1
                                      corrector = 0.00)
 {
 
-    specs = thread_specs(str(thread, "-ext"));
+    specs = thread_specs(thread);
     P = specs[0];
     Rrot = specs[1];
     Dsupport = specs[2];
@@ -117,7 +117,7 @@ module create_external_threaded_part(upper_part = true, thread = "M8", turns = 1
             union()
             {
                 cylinder(h = H, r = Dsupport / 2); // core
-                translate([ 0, 0, P * 0.5 ]) resize([ Douter, Douter, 0 ]) thread(str(thread, "-ext"), turns = turns);
+                translate([ 0, 0, P * 0.5 ]) resize([ Douter, Douter, 0 ]) thread(thread, turns = turns);
             }
 
             // Subtract chamfer
@@ -145,11 +145,11 @@ module create_external_threaded_part(upper_part = true, thread = "M8", turns = 1
     }
 }
 
-module create_internal_threaded_part(upper_part = true, thread = "M10", style = "Circular", outer_diameter = 0.0,
+module create_internal_threaded_part(upper_part = true, thread = "M10-int", style = "Circular", outer_diameter = 0.0,
                                      chamfer = true, turns = 1, min_wall_size = 1.0, corrector = 0.00)
 {
 
-    specs = thread_specs(str(thread, "-int"));
+    specs = thread_specs(thread);
     P = specs[0];
     Rrot = specs[1];
     Dsupport = specs[2];
@@ -201,7 +201,7 @@ module create_internal_threaded_part(upper_part = true, thread = "M10", style = 
             {
                 translate([ 0, 0, -z_fite / 2 ]) cylinder(H + z_fite, d = Rsupport * 2);
                 translate([ 0, 0, P / 2 ]) resize([ (Rsupport + corrector) * 2, (Rsupport + corrector) * 2, 0 ])
-                    thread(str(thread, "-int"), turns = turns);
+                    thread(thread, turns = turns);
             }
         }
         // Workaround to remove distortions
