@@ -42,7 +42,7 @@ function substr(s, b, e) = let(e = is_undef(e) || e > len(s) ? len(s) : e)(b == 
                                                                                    : join([for (i = [b:1:e - 1]) s[i]]);
 
 // generateGasket module to create a gasket for the pipe fitting
-module generateGasket(corrector, designator, mid_height, wall_thickness, fudge, turns, input_dia, tol_gasket, tol_pipe, z_fite = 0.05)
+module generateGasket(corrector, designator, mid_height, wall_thickness, fudge, turns, input_dia, fit_excess, tol_gasket, tol_pipe, z_fite = 0.05)
 {
     // adapter generation uses external diameter, this maps to the inner diameter
     lower_outer_to_inner_corr = input_dia + wall_thickness * 2 + tol_pipe * 2;
@@ -58,9 +58,9 @@ module generateGasket(corrector, designator, mid_height, wall_thickness, fudge, 
             cylinder(h = mid_height, r1 = (lower_outer_to_inner_corr / 2 - wall_thickness) * fudge,
                      r2 = (Dsupport / 2 - wall_thickness) * fudge, center = false);
             translate([ 0, 0, mid_height ])
-                cylinder(h = (turns * pitch), r = (Dsupport / 2 - wall_thickness) * fudge, center = false);
+                cylinder(h = (turns * pitch) + fit_excess, r = (Dsupport / 2 - wall_thickness) * fudge, center = false);
         }
-        translate([ 0, 0, -z_fite / 2 ]) cylinder(h = mid_height + (turns * pitch) + z_fite,
+        translate([ 0, 0, -z_fite / 2 ]) cylinder(h = mid_height + (turns * pitch) + fit_excess + z_fite,
                                                   r = (input_dia / 2 + tol_gasket) * fudge, center = false);
     }
 }

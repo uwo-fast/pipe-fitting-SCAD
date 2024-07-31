@@ -14,8 +14,10 @@ input_dia = 12.00;
 
 // The upper and lower limits for the desired gasket thickness
 // Used along with input_dia to determine valid thread types 
-gasket_thickness_upper = 10;
-gasket_thickness_lower = 8;
+gasket_thickness_upper = 20;
+gasket_thickness_lower = 18;
+
+gasket_extra_length = 3; // New parameter to allow for a longer gasket!!!
 
 // Tolerance between the input pipe(s) and the main fitting part and nut part
 tol_pipe = 0.2;
@@ -23,7 +25,7 @@ tol_pipe = 0.2;
 // Tolerance between the input pipe(s) and the gasket(s)
 tol_gasket = 0.1;
 
-turns = 4;
+turns = 5;
 
 // Wall thickness of the fitting parts
 wall_thickness = 1.2;
@@ -33,7 +35,7 @@ lower_length = 10.0;
 
 // Mid part height between the upper part where the thread 
 // is and lower part that makes up the center tube
-mid_height = 5.0;
+mid_height = 10.0;
 
 // Cap thickness for the fitting nut
 cap_thickness = 1.0;
@@ -105,7 +107,7 @@ if (!export)
                 color(c = "blue", alpha = 0.1) translate([ 0, 0, -input_dia * 5 ])
                     cylinder(h = input_dia * 10, d = input_dia);
                 generateGasket(designator = designators[i], mid_height = mid_height, wall_thickness = wall_thickness,
-                               fudge = fudge, turns = turns, input_dia = input_dia, tol_gasket = tol_gasket,
+                               fudge = fudge, turns = turns, input_dia = input_dia, fit_excess = gasket_extra_length, tol_gasket = tol_gasket,
                                tol_pipe = tol_pipe);
             }
         }
@@ -143,7 +145,7 @@ if (!export || (selectedPart == "gasket" || selectedPart == "all"))
 {
     translate([ thread_specs(thread_type_select)[2], -thread_specs(thread_type_select)[2], 0 ])
         generateGasket(corrector = corrector, designator = thread_type_select, mid_height = mid_height,
-                       wall_thickness = wall_thickness, fudge = fudge, turns = turns, input_dia = input_dia,
+                       wall_thickness = wall_thickness, fudge = fudge, turns = turns, input_dia = input_dia, fit_excess = gasket_extra_length,
                        tol_gasket = tol_gasket, tol_pipe = tol_pipe);
 }
 
