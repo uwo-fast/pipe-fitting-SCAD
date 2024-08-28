@@ -1,3 +1,5 @@
+// pipeFittingDesigner.scad
+
 include <threadlib/THREAD_TABLE.scad>
 use <threadlib/threadlib.scad>;
 
@@ -14,8 +16,8 @@ input_dia = 12.00;
 
 // The upper and lower limits for the desired gasket thickness
 // Used along with input_dia to determine valid thread types 
-gasket_thickness_upper = 20;
-gasket_thickness_lower = 18;
+gasket_thickness_upper = 10;
+gasket_thickness_lower = 8;
 
 gasket_extra_length = 3; // New parameter to allow for a longer gasket!!!
 

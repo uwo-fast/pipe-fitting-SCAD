@@ -45,6 +45,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+// Adapter_External_Bare.scad
+
 use <AdapterGenerator.scad>;
 use <threadlib/threadlib.scad>;
 
