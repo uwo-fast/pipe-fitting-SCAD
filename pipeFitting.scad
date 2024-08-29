@@ -3,8 +3,8 @@
 include <threadlib/THREAD_TABLE.scad>
 use <threadlib/threadlib.scad>;
 
-use <adaptersMod-scad/Adapter_External-Bare.scad>;
-use <adaptersMod-scad/Adapter_Internal-Cap.scad>;
+use <adaptersMod/externalToPipe.scad>;
+use <adaptersMod/internalToPipe.scad>;
 
 // Function to check if a string ends with a given suffix
 function ends_with(str, suffix) = let(str_len = len(str), suffix_len = len(suffix))

@@ -3,8 +3,8 @@
 include <threadlib/THREAD_TABLE.scad>
 use <threadlib/threadlib.scad>;
 
-use <adaptersMod-scad/Adapter_External-Bare.scad>;
-use <adaptersMod-scad/Adapter_Internal-Cap.scad>;
+use <adaptersMod/externalToPipe.scad>;
+use <adaptersMod/internalToPipe.scad>;
 use <pipeFitting.scad>;
 
 // ----------------------------
@@ -41,6 +41,7 @@ mid_height = 10.0;
 
 // Cap thickness for the fitting nut
 cap_thickness = 1.0;
+nut_wall_thickness = 2.4;
 
 // Entry chamfer for the fitting mate
 entry_chamfer = true;
@@ -139,7 +140,7 @@ if (!export || (selectedPart == "nut" || selectedPart == "all"))
 {
     translate([ -thread_specs(thread_type_select)[2], -thread_specs(thread_type_select)[2], 0 ])
         generateNut(corrector = corrector, thread_type = thread_type_select, turns = turns,
-                    wall_thickness = wall_thickness, entry_chamfer = entry_chamfer, style = style,
+                    wall_thickness = nut_wall_thickness, entry_chamfer = entry_chamfer, style = style,
                     cap_thickness = cap_thickness, input_dia = input_dia, tol_pipe = tol_pipe, fudge = fudge);
 }
 
