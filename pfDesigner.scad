@@ -16,10 +16,10 @@ input_dia = 12.00;
 
 // The upper and lower limits for the desired gasket thickness
 // Used along with input_dia to determine valid thread types 
-gasket_thickness_upper = 10;
-gasket_thickness_lower = 8;
+gasket_thickness_upper = 15;
+gasket_thickness_lower = 13;
 
-gasket_extra_length = 3; // New parameter to allow for a longer gasket!!!
+gasket_extra_length = 3; // Allows addition of extra length to the gasket to ensure a tight fit
 
 // Tolerance between the input pipe(s) and the main fitting part and nut part
 tol_pipe = 0.2;
@@ -33,28 +33,30 @@ turns = 5;
 wall_thickness = 1.2;
 
 // Lower part length, length of the center tube is lower_length * 2
-lower_length = 10.0;
+middle_length = 20.0;
 
 // Mid part height between the upper part where the thread 
 // is and lower part that makes up the center tube
-mid_height = 10.0;
+transition_length = 15.0;
 
 // Cap thickness for the fitting nut
 cap_thickness = 1.0;
 nut_wall_thickness = 2.4;
 
 // Entry chamfer for the fitting mate
-entry_chamfer = true;
+entry_chamfer = false;
 
 // The style of the fitting
 style = "Hexagon"; // "Hexagon", "Cone", "Circular"
 
 // see the <<<ECHO: "SHOWING[0/X]:">>> for the number of available threads X
 // based on your above specifications
-selectedThread = 0; 
+selectedThread = 5; 
 
 export = false;       // when true derenders all but the selected 'selectedPart'
 selectedPart = "all"; // show the fitting, nut, gasket, or all
+
+showInputPipe = false; // show the input pipe(s) for reference
 
 // ----------------------------
 // ------ End Parameters ------
@@ -70,6 +72,9 @@ $fn = $preview ? 120 * 1 / 4 : 120 * 1;
 fudge = 1 / cos(180 / $fn);
 corrector = 0.15;
 
+lower_length = middle_length / 2;
+mid_height = transition_length / 2;
+
 // ----------------------------
 // --- End Global Variables ---
 // ----------------------------
@@ -78,7 +83,7 @@ corrector = 0.15;
 // ----- Design Solutions -----
 // ----------------------------
 
-// Designators for external threads with Dsupport between 25 and 26
+// Designators for external threads within gasket thicknesses ranges
 designators = thread_specD("ext", (input_dia + gasket_thickness_lower / 2), (input_dia + gasket_thickness_upper / 2));
 
 if (!export)
@@ -134,6 +139,11 @@ if (!export || (selectedPart == "fitting" || selectedPart == "all"))
     generateFitting(corrector = corrector, thread_type = thread_type_select, input_dia = input_dia, turns = turns,
                     wall_thickness = wall_thickness, tol_pipe = tol_pipe, entry_chamfer = entry_chamfer, style = style,
                     mid_height = mid_height, lower_length = lower_length);
+    if (showInputPipe)
+    {
+        color(c = "blue", alpha = 10) 
+            cylinder(h = (middle_length + transition_length * 2 + (turns + 1) * thread_specs(thread_type_select)[0] * 2) + input_dia * 4, d = input_dia, center = true);
+    }
 }
 
 if (!export || (selectedPart == "nut" || selectedPart == "all"))
