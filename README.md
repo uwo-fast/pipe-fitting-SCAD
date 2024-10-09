@@ -6,8 +6,7 @@ OpenSCAD script for generating pipe fittings parametrically.
 
 This repository contains a script for modeling a pipe fitting assembly, complete with gaskets, threaded nuts, and customizable pipe fittings. The script is designed for use in OpenSCAD and offers extensive customization for each component while adhering to existing industry thread standards.
 
-<img src="docs/manufactured_1.jpg" alt="Images of the Manufactured Pipe Fitting 1" height="400"/>
-<img src="docs/manufactured_2.jpg" alt="Images of the Manufactured Pipe Fitting 1" height="400"/>
+<img src="docs/manufactured.jpg" alt="Images of the Manufactured Pipe Fitting 1" width="600"/>
 
 ## Dependencies
 
@@ -33,6 +32,13 @@ Modify the dimensional variables at the beginning of the pfDesigner.scad script 
 *Add part here about pettings and materials from paper.*
 
 <img src="docs/slicer_view.jpg" alt="Slicer View for Manufacturing Fittings" width="800"/>
+
+### Performance Testing
+
+NOTE THIS IS NOT A GAURENTEE OF SAFETY, ALWAYS CONDUCT YOUR OWN TESTING AND ALWAYS TAKE PROPER SAFETY PERCAUTIONS WHEN WORKING WITH HIGH PRESSURES. 
+*Add a laymans terms of the results from the paper here.*
+
+<img src="docs/tested.jpg" alt="Fractured Print After Being Subject to Pressure" width="600"/>
 
 ## How it Works
 
