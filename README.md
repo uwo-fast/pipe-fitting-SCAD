@@ -11,12 +11,12 @@ This repository contains a script for modeling a pipe fitting assembly, complete
 ## Dependencies
 
 - OpenSCAD software.
-- `threads-scad` library by rcolyer, available at [rcolyer/threads-scad](https://github.com/rcolyer/threads-scad).
+- `threadlib library by rcolyer, available at [rcolyer/threads-scad](https://github.com/rcolyer/threads-scad).
 
 ## Installation
 
 1. Ensure OpenSCAD is installed on your system.
-3. Download the `threads-scad` library as well as this `pipe-fitting-scad` library.
+3. Download the `threadlib library as well as this `pipe-fitting-scad` library.
 3. Place both libraries in the OpenSCAD libraries directory (typically at `C:\Program Files\OpenSCAD\libraries` on Windows).
 
 ## Usage
