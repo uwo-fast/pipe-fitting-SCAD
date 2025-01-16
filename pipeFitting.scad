@@ -44,7 +44,8 @@ function substr(s, b, e) = let(e = is_undef(e) || e > len(s) ? len(s) : e)(b == 
                                                                                    : join([for (i = [b:1:e - 1]) s[i]]);
 
 // generateGasket module to create a gasket for the pipe fitting
-module generateGasket(corrector, designator, mid_height, wall_thickness, fudge, turns, input_dia, fit_excess, tol_gasket, tol_pipe, z_fite = 0.05)
+module generateGasket(corrector, designator, mid_height, wall_thickness, fudge, turns, input_dia, fit_excess,
+                      tol_gasket, tol_pipe, z_fite = 0.05)
 {
     // adapter generation uses external diameter, this maps to the inner diameter
     lower_outer_to_inner_corr = input_dia + wall_thickness * 2 + tol_pipe * 2;
@@ -74,23 +75,21 @@ module generateFitting(corrector, thread_type, input_dia, turns, wall_thickness,
     // adapter generation uses external diameter, this maps to the inner diameter
     lower_outer_to_inner_corr = input_dia + wall_thickness * 2 + tol_pipe * 2;
 
-        Adapter_External_Bare( corrector,                                           
-                              thread_type, turns, wall_thickness, entry_chamfer,      // Upper External Thread Part
-                              style, mid_outer_diameter, mid_height, 0, 0,            // Middle Part
-                              lower_outer_to_inner_corr, wall_thickness, lower_length // Lower Part
-        );
+    Adapter_External_Bare(corrector, thread_type, turns, wall_thickness, entry_chamfer, // Upper External Thread Part
+                          style, mid_outer_diameter, mid_height, 0, 0,                  // Middle Part
+                          lower_outer_to_inner_corr, wall_thickness, lower_length       // Lower Part
+    );
 
-    rotate([ 0, 180, 0 ]) 
-        Adapter_External_Bare(  corrector,                                         
-                              thread_type, turns, wall_thickness, entry_chamfer,      // Upper External Thread Part
-                              style, mid_outer_diameter, mid_height, 0, 0,            // Middle Part
-                              lower_outer_to_inner_corr, wall_thickness, lower_length // Lower Part
-        );
+    rotate([ 0, 180, 0 ]) Adapter_External_Bare(corrector, thread_type, turns, wall_thickness,
+                                                entry_chamfer, // Upper External Thread Part
+                                                style, mid_outer_diameter, mid_height, 0, 0,            // Middle Part
+                                                lower_outer_to_inner_corr, wall_thickness, lower_length // Lower Part
+    );
 }
 
 // generateNut module to create the nut for the pipe fitting
-module generateNut(corrector, thread_type, turns, wall_thickness, entry_chamfer, style, cap_diameter = 0,
-                   cap_thickness, z_fite=0.05, input_dia, tol_pipe, fudge)
+module generateNut(corrector, thread_type, turns, wall_thickness, entry_chamfer, style, cap_diameter = 0, cap_thickness,
+                   z_fite = 0.05, input_dia, tol_pipe, fudge)
 {
     {
         difference()

@@ -15,7 +15,7 @@ use <pipeFitting.scad>;
 input_dia = 12.00;
 
 // The upper and lower limits for the desired gasket thickness
-// Used along with input_dia to determine valid thread types 
+// Used along with input_dia to determine valid thread types
 gasket_thickness_upper = 15;
 gasket_thickness_lower = 13;
 
@@ -35,7 +35,7 @@ wall_thickness = 1.2;
 // Lower part length, length of the center tube is lower_length * 2
 middle_length = 20.0;
 
-// Mid part height between the upper part where the thread 
+// Mid part height between the upper part where the thread
 // is and lower part that makes up the center tube
 transition_length = 15.0;
 
@@ -44,16 +44,16 @@ cap_thickness = 1.0;
 nut_wall_thickness = 2.4;
 
 // Entry chamfer for the fitting mate
-entry_chamfer = false;
+entry_chamfer = true;
 
 // The style of the fitting
 style = "Hexagon"; // "Hexagon", "Cone", "Circular"
 
 // see the <<<ECHO: "SHOWING[0/X]:">>> for the number of available threads X
 // based on your above specifications
-selectedThread = 5; 
+selectedThread = 5;
 
-export = false;       // when true derenders all but the selected 'selectedPart'
+export = true;        // when true derenders all but the selected 'selectedPart'
 selectedPart = "all"; // show the fitting, nut, gasket, or all
 
 showInputPipe = false; // show the input pipe(s) for reference
@@ -115,8 +115,8 @@ if (!export)
                 color(c = "blue", alpha = 0.1) translate([ 0, 0, -input_dia * 5 ])
                     cylinder(h = input_dia * 10, d = input_dia);
                 generateGasket(designator = designators[i], mid_height = mid_height, wall_thickness = wall_thickness,
-                               fudge = fudge, turns = turns, input_dia = input_dia, fit_excess = gasket_extra_length, tol_gasket = tol_gasket,
-                               tol_pipe = tol_pipe);
+                               fudge = fudge, turns = turns, input_dia = input_dia, fit_excess = gasket_extra_length,
+                               tol_gasket = tol_gasket, tol_pipe = tol_pipe);
             }
         }
     }
@@ -141,8 +141,10 @@ if (!export || (selectedPart == "fitting" || selectedPart == "all"))
                     mid_height = mid_height, lower_length = lower_length);
     if (showInputPipe)
     {
-        color(c = "blue", alpha = 10) 
-            cylinder(h = (middle_length + transition_length * 2 + (turns + 1) * thread_specs(thread_type_select)[0] * 2) + input_dia * 4, d = input_dia, center = true);
+        color(c = "blue", alpha = 10) cylinder(
+            h = (middle_length + transition_length * 2 + (turns + 1) * thread_specs(thread_type_select)[0] * 2) +
+                input_dia * 4,
+            d = input_dia, center = true);
     }
 }
 
@@ -158,8 +160,8 @@ if (!export || (selectedPart == "gasket" || selectedPart == "all"))
 {
     translate([ thread_specs(thread_type_select)[2], -thread_specs(thread_type_select)[2], 0 ])
         generateGasket(corrector = corrector, designator = thread_type_select, mid_height = mid_height,
-                       wall_thickness = wall_thickness, fudge = fudge, turns = turns, input_dia = input_dia, fit_excess = gasket_extra_length,
-                       tol_gasket = tol_gasket, tol_pipe = tol_pipe);
+                       wall_thickness = wall_thickness, fudge = fudge, turns = turns, input_dia = input_dia,
+                       fit_excess = gasket_extra_length, tol_gasket = tol_gasket, tol_pipe = tol_pipe);
 }
 
 // ----------------------------
