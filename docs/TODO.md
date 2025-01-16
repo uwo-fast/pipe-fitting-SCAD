@@ -1,7 +1,20 @@
 # TODO
-## Multi - intersect joints
+
+## Enhancements
+
+These are things to improve the existing function of the lib, either performance or usability.
+
+- Clean up API by having defaults for certain function calls
+
+## Features
+
+These are things that are new to extend the function of the lib.
+
+### Multi - intersect joints
+
 - Ability to accept general input requirements to a junction something like:
-```
+
+```json
 {
   "connections": [
     {
@@ -19,13 +32,11 @@
   ]
 }
 ```
-## Common HVAC Connectors and Fittings
 
-### Done
+### Common HVAC Connectors and Fittings
+
 
 - **Press-Fit Fittings:** They compress a gasket between the fitting and pipe. 3D printed versions need to ensure the right balance between tightness and not damaging the gasket.
-
-### Not Done
 
 - **Compression Fittings:** These join two pipes or a pipe to a fixture using a nut and ferrule for a seal. Need to consider material strength for 3D printing to ensure they can handle the pressure without deforming.
 
@@ -53,18 +64,4 @@
 
 - **Schraeder Valves:** Used for refrigerant charging. The 3D printed version must ensure that the valve core fits securely and is leak-proof.
 
-### General Considerations for 3D Printed HVAC Connectors:
-
-- **Material Selection:** Must be durable, able to withstand the temperatures and pressures of refrigerant gases, and resistant to chemical degradation.
-
-- **Dimensional Accuracy:** Essential for ensuring that fittings are leak-proof and compatible with existing pipes and components.
-
-- **Structural Integrity:** The connectors must be able to withstand mechanical stresses without failing.
-
-- **Compatibility with Seals and Gaskets:** Surfaces should be smooth to not damage any seals or gaskets they come into contact with.
-
-- **Regulatory Compliance:** Must meet industry standards for safety and performance.
-
-- **Post-Processing:** Some printed parts may require additional processing, such as threading or smoothing, to ensure proper function.
-
-- **Testing:** Prototypes should be rigorously tested for pressure and leaks before being implemented in actual systems.
+#### 

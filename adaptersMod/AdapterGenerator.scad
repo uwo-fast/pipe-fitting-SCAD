@@ -212,7 +212,6 @@ module create_internal_threaded_part(upper_part = true, thread = "M10-int", styl
     }
 }
 
-
 module hexagon(width, height)
 {
     fudge = 1 / cos(180 / 6);
