@@ -1,6 +1,6 @@
 # pipe-fitting-SCAD
 
-OpenSCAD script for generating pipe fittings parametrically. _This is meant to be an archive branch to support the JMMP Publication_
+OpenSCAD script for generating pipe fittings parametrically.
 
 ## Overview
 
