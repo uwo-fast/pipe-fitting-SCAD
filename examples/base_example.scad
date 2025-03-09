@@ -1,11 +1,5 @@
-// pipeFittingDesigner.scad
-
-include <threadlib/THREAD_TABLE.scad>
+use <pipe-fitting-SCAD/pipeFitting.scad>;
 use <threadlib/threadlib.scad>;
-
-use <../adaptersMod/externalToPipe.scad>;
-use <../adaptersMod/internalToPipe.scad>;
-use <../pipeFitting.scad>;
 
 // ----------------------------
 // -------- Parameters --------
@@ -61,6 +55,9 @@ selectedPart = "all"; // ["fitting", "nut", "gasket", "all"]
 // show the pipe that the fitting is designed for
 showInputPipe = true; // [true, false]
 
+// show the cross section of the fitting
+showXSection = true; // [true, false]
+
 // The thread type to use for the fitting
 thread_type_select = "UNC-7/8-ext";
 
@@ -100,15 +97,11 @@ thread_height = (turns + 1) * thread_pitch;
 
 if ((selectedPart == "fitting" || selectedPart == "all"))
 {
-    color("green") difference()
-    {
+
+    color("green") xSection(showXSection)
         generateFitting(corrector = corrector, thread_type = thread_type_select, input_dia = input_dia, turns = turns,
                         wall_thickness = wall_thickness, tol_pipe = tol_pipe, entry_chamfer = entry_chamfer,
                         style = style, mid_height = mid_height, lower_length = lower_length);
-
-        for (i = [0:1])
-            mirror([ i, 1, 0 ]) translate([ 0, 0, -50 ]) cube([ 100, 100, 100 ]);
-    }
 
     if (showInputPipe)
     {
@@ -122,27 +115,35 @@ if ((selectedPart == "fitting" || selectedPart == "all"))
 if ((selectedPart == "nut" || selectedPart == "all"))
 {
     translate([ 0, 0.05, thread_height + cap_thickness / 2 + lower_length + mid_height * 2 ]) rotate([ 0, 180, 0 ])
-        color("blue") difference()
-    {
-        rotate([ 0, 0, 180 ])
+        color("blue") xSection(showXSection) rotate([ 0, 0, 180 ])
             generateNut(corrector = corrector, thread_type = thread_type_select, turns = turns,
                         wall_thickness = nut_wall_thickness, entry_chamfer = entry_chamfer, style = style,
                         cap_thickness = cap_thickness, input_dia = input_dia, tol_pipe = tol_pipe, fudge = fudge);
-
-        for (i = [0:1])
-            mirror([ i, 1, 0 ]) translate([ 0, 0, -50 ]) cube([ 100, 100, 100 ]);
-    }
 }
 
 if ((selectedPart == "gasket" || selectedPart == "all"))
 {
-    translate([ 0, -0.05, lower_length + mid_height ]) color("orange") difference()
-    {
+    translate([ 0, -0.05, lower_length + mid_height ]) color("orange") xSection(showXSection)
         generateGasket(corrector = corrector, designator = thread_type_select, mid_height = mid_height,
                        wall_thickness = wall_thickness, fudge = fudge, turns = turns, input_dia = input_dia,
                        fit_excess = gasket_extra_length, tol_gasket = tol_gasket, tol_pipe = tol_pipe);
-        for (i = [0:1])
-            mirror([ i, 1, 0 ]) translate([ 0, 0, -50 ]) cube([ 100, 100, 100 ]);
+}
+
+module xSection(showXSection)
+{
+    if (showXSection)
+    {
+        difference()
+        {
+            children();
+
+            for (i = [0:1])
+                mirror([ i, 1, 0 ]) translate([ 0, 0, -50 ]) cube([ 100, 100, 100 ]);
+        }
+    }
+    else
+    {
+        children();
     }
 }
 
