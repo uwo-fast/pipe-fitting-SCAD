@@ -1,5 +1,5 @@
 # Cross-platform line-ending policy.
-# Store text with LF in Git so Windows and WSL clones stay stable.
+# Store text with LF in Git so Windows and Unix-like systems stay in sync.
 * text=auto eol=lf
 
 # Windows command files conventionally use CRLF.
