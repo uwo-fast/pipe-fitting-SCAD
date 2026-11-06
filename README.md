@@ -46,6 +46,10 @@ _Add a laymans terms of the results from the paper here._
 
 <img src="docs/pipefitting-program-flowchart_paper.jpg" alt="Programming Overview Flowchart" width="600"/>
 
+## Publication Archive
+
+The paper's Data Availability Statement refers to an archived `jmmp` branch. That branch is now the tag [`archive/jmmp`](https://github.com/uwo-fast/pipe-fitting-SCAD/tree/archive/jmmp), at the same commit (`75c1e87`).
+
 ## Contributing & Requests
 
 Contributions to improve the script or extend its capabilities are welcome. Please submit pull requests with clear descriptions of changes and additions. Similarly, submit an issue to request a fix or addition with a clear description of the bug or feature to be addressed.
