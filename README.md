@@ -50,6 +50,8 @@ _Add a laymans terms of the results from the paper here._
 
 The paper's Data Availability Statement refers to an archived `jmmp` branch. That branch is now the tag [`archive/jmmp`](https://github.com/uwo-fast/pipe-fitting-SCAD/tree/archive/jmmp), at the same commit (`75c1e87`).
 
+The values in the paper's Table 3 apply to the tag [`archive/table-3`](https://github.com/uwo-fast/pipe-fitting-SCAD/tree/archive/table-3) (`7a59d5b`). The two rows Table 3 labels `middle_length` are the `lower_length` and `mid_height` inputs at that tag. Later code replaced those inputs with `middle_length` and `transition_length` and changed what they drive, so Table 3's numbers do not carry over. At the tag, Table 3's values reproduce the OSF fittings, nuts and 20 mm gasket. The OSF 10 mm gasket STL is 1 mm longer than Table 3's value gives.
+
 ## Contributing & Requests
 
 Contributions to improve the script or extend its capabilities are welcome. Please submit pull requests with clear descriptions of changes and additions. Similarly, submit an issue to request a fix or addition with a clear description of the bug or feature to be addressed.
