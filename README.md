@@ -49,8 +49,22 @@ The tested fittings and nuts were printed in PLA, PETG and ASA, and the gaskets 
 
 ### Performance Testing
 
-NOTE THIS IS NOT A GAURENTEE OF SAFETY, ALWAYS CONDUCT YOUR OWN TESTING AND ALWAYS TAKE PROPER SAFETY PERCAUTIONS WHEN WORKING WITH HIGH PRESSURES.
-_Add a laymans terms of the results from the paper here._
+**These results are not a guarantee of safety or a pressure rating. Test your own parts, and take proper precautions when working with pressurised water.**
+
+The paper tested printed couplings with water pressure, raised in steps of 0.345 MPa (50 psi) held for 180 s each, until the coupling leaked or lost pressure. The highest pressures reached were:
+
+| Coupling | Highest pressure | Torque |
+|---|---|---|
+| 10 mm, PETG body and nuts | 4.551 MPa (660 psi) | Highest without cracking: 12.5 Nm |
+| 10 mm, ASA | 2.758 MPa (400 psi) | Highest without cracking: 15 Nm |
+| 10 mm, PLA | 2.275 MPa (330 psi) | Highest without cracking: 7.5 Nm |
+| 20 mm, PETG | 2.392 MPa (347 psi) | Reached at 17.5 Nm |
+
+All gaskets were TPE 85 Shore A. The figures were read by hand from an analog gauge with an accuracy of ±0.138 MPa (±20 psi). That is the gauge's accuracy, not the spread between parts. The readings for each test were not kept, so the number of tests behind each figure is not known.
+
+The far end of each test coupling was closed with a capped nut and a flat 2 mm disc gasket, rather than a second pipe. These parts are on [OSF](https://osf.io/fqjxe/) as `Closedcapnutpart` and `Flatgasketpart`, and this code does not generate them. The capped nuts are the standard nuts scaled up by 2% with the hole filled. So each test loaded one tapered gasket sealing on a pipe. Which end leaked was not recorded.
+
+These are the highest pressures held for a few minutes by these particular parts. They are not working pressures. The tests did not cover pressure held for long periods, repeated pressure cycles, water temperature, ageing, or repeated assembly. The 20 mm coupling reached about half the pressure of the 10 mm one, so results at one size do not carry over to another. The paper compares 4.551 MPa with a 0.552 MPa residential limit, which is about eight times higher. That ratio is not a safety factor.
 
 <img src="docs/tested.jpg" alt="Fractured Print After Being Subject to Pressure" width="600"/>
 
