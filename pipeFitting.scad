@@ -88,8 +88,9 @@ module generateFitting(corrector, thread_type, input_dia, turns, wall_thickness,
 }
 
 // generateNut module to create the nut for the pipe fitting
+// closed = true leaves the cap solid, to seal the far end of a test assembly
 module generateNut(corrector, thread_type, turns, wall_thickness, entry_chamfer, style, cap_diameter = 0, cap_thickness,
-                   z_fite = 0.05, input_dia, tol_pipe, fudge)
+                   z_fite = 0.05, input_dia, tol_pipe, fudge, closed = false)
 {
     {
         difference()
@@ -100,7 +101,15 @@ module generateNut(corrector, thread_type, turns, wall_thickness, entry_chamfer,
                                  cap_diameter, // Upper Internal Thread Part
                                  cap_thickness // Cap Part
             );
-            cylinder(h = cap_thickness + z_fite, r = (input_dia / 2 + tol_pipe) * fudge, $fn = 120, center = true);
+            if (!closed)
+                cylinder(h = cap_thickness + z_fite, r = (input_dia / 2 + tol_pipe) * fudge, $fn = 120, center = true);
         }
     }
+}
+
+// generateFlatGasket module to create the disc that seals the fitting end inside a closed nut
+// Its diameter is the fitting thread's core diameter, which clears the nut's thread crests
+module generateFlatGasket(thread_type, thickness)
+{
+    cylinder(h = thickness, d = thread_specs(thread_type)[2], $fn = 120);
 }
