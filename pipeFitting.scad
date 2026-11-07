@@ -43,6 +43,23 @@ function join(l, delimiter = "") = let(s = len(l), d = delimiter,
 function substr(s, b, e) = let(e = is_undef(e) || e > len(s) ? len(s) : e)(b == e) ? ""
                                                                                    : join([for (i = [b:1:e - 1]) s[i]]);
 
+// check_fitting module to stop with an error when the inputs cannot make a working fitting
+module check_fitting(thread_type, input_dia, wall_thickness, tol_pipe, tol_gasket, gasket_extra_length)
+{
+    specs = thread_specs(thread_type);
+    pitch = specs[0];
+    bore_r = specs[2] / 2 - wall_thickness;
+
+    assert(bore_r > input_dia / 2 + tol_pipe,
+           str(thread_type, " is too small for this pipe: its bore radius is ", bore_r, " mm after wall_thickness, ",
+               "which must be more than input_dia / 2 + tol_pipe = ", input_dia / 2 + tol_pipe, " mm"));
+    assert(tol_gasket < tol_pipe, str("tol_gasket (", tol_gasket, ") must be less than tol_pipe (", tol_pipe,
+                                      "), or the gasket has no wall at its narrow end"));
+    assert(gasket_extra_length > pitch,
+           str("gasket_extra_length (", gasket_extra_length, ") must be more than the pitch of ", thread_type, " (",
+               pitch, " mm), or the nut seats without compressing the gasket"));
+}
+
 // generateGasket module to create a gasket for the pipe fitting
 module generateGasket(corrector, designator, mid_height, wall_thickness, fudge, turns, input_dia, fit_excess,
                       tol_gasket, tol_pipe, z_fite = 0.05)
