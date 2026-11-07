@@ -130,6 +130,8 @@ module create_external_threaded_part(upper_part = true, thread = "M8", turns = 1
                     cylinder(h = chamfer_size * 3 + z_fite, d = Douter + z_fite, center = false);
                     cylinder(h = chamfer_size * 3 + z_fite, r1 = Dsupport / 2 + chamfer_size,
                              r2 = Dsupport / 2 - chamfer_size * 2, center = false);
+                    // Chamfer the thread only, so the wall keeps its full thickness to the tip
+                    cylinder(h = chamfer_size * 3 + z_fite, r = Dsupport / 2, center = false);
                 }
             }
             else
