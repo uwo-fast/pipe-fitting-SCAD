@@ -11,6 +11,10 @@ Date:       25.05.2020
 Author:     Makrokaba
 Version:    0.0-0.2
 
+Copyright (C) 2024 Cameron K. Brooks and FAST Lab, Western University (version 0.4),
+licensed under GPL-3.0-only; see LICENSE.
+Copyright (c) 2020 Makrokaba (versions 0.0-0.3), under the BSD 3-Clause terms below.
+
 Universal FEMALE-FEMALE fitting generator
 Can be used to join 2 external threaded pieces.
 Supports the following thread specifications:

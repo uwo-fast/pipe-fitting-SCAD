@@ -86,7 +86,11 @@ Contributions to improve the script or extend its capabilities are welcome. Plea
 
 ## License
 
-This script is licensed under the GPL 3.0 or later. For more details, see the [LICENSE](LICENSE) file.
+Copyright (C) 2023 Cameron K. Brooks and FAST Lab, Western University.
+
+Licensed under the GNU General Public License, version 3 only (GPL-3.0-only). See the [LICENSE](LICENSE) file.
+
+The files in `adaptersMod/` are adapted from Makrokaba's generator (see below). Its 2020 versions are under the BSD 3-Clause terms kept in those files' headers.
 
 ## Acknowledgement
 
@@ -96,4 +100,4 @@ Taherzadeh Fini, A.; Brooks, C.K.; Romani, A.; Straatman, A.G.; Pearce, J.M. Par
 
 The design is certified by the Open Source Hardware Association as [CA000069](https://certification.oshwa.org/ca000069.html).
 
-This design uses [threadlib by Adrian Schlatter](https://github.com/adrianschlatter/threadlib) and inspiration from [Makrokaba's pipe joint generator](https://www.thingiverse.com/thing:4323468/files).
+This design uses [threadlib by Adrian Schlatter](https://github.com/adrianschlatter/threadlib) and builds on [Makrokaba's universal thread and pipe joint generator](https://www.thingiverse.com/thing:4323468), which the files in `adaptersMod/` were adapted from.
