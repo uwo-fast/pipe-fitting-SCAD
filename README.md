@@ -13,13 +13,25 @@ This repository contains a script for modeling a pipe fitting assembly, complete
 ## Dependencies
 
 - OpenSCAD software.
-- `threadlib` library by adrianschlatter, available at [adrianschlatter/threadlib](https://github.com/adrianschlatter/threadlib).
+- [`threadlib`](https://github.com/adrianschlatter/threadlib) by Adrian Schlatter. Use release 0.5. Versions 0.3 and later reproduce the tested fittings and nuts, but which version generated them is not recorded.
+- The three libraries `threadlib` itself needs: [`scad-utils`](https://github.com/openscad/scad-utils), [`list-comprehension-demos`](https://github.com/openscad/list-comprehension-demos) and [`thread_profile.scad`](https://github.com/MisterHW/IoP-satellite/blob/master/OpenSCAD%20bottle%20threads/thread_profile.scad).
 
 ## Installation
 
 1. Ensure OpenSCAD is installed on your system.
-2. Download the `threadlib` library as well as this `pipe-fitting-scad` library.
-3. Place both libraries in the OpenSCAD libraries directory (typically at `C:\Program Files\OpenSCAD\libraries` on Windows).
+2. Open your libraries folder from OpenSCAD with File > Show Library Folder.
+3. Download all of the libraries above and this repository into it, so that it looks like this. A downloaded zip adds a suffix such as `-main` to the folder name, which you need to remove.
+
+```text
+libraries
+├── list-comprehension-demos/
+├── pipe-fitting-SCAD/
+├── scad-utils/
+├── thread_profile.scad
+└── threadlib/
+```
+
+If a library is missing, OpenSCAD can still export a fitting with no threads and report success. Check the console for `Can't open library` warnings, and check that the threads are there before printing.
 
 ## Usage
 
@@ -31,7 +43,7 @@ Modify the dimensional variables at the beginning of the pfDesigner.scad script 
 
 ### Manufacturing your Fitting
 
-_Add part here about pettings and materials from paper._
+The tested fittings and nuts were printed in PLA, PETG and ASA, and the gaskets in TPE 85 Shore A, using 0.4 mm nozzles and PrusaSlicer 2.8.0. The STLs, slicer profiles and G-code are on [OSF](https://osf.io/fqjxe/). Print settings are in the paper's Table 3, though some differ from the OSF G-code.
 
 <img src="docs/slicer_view.jpg" alt="Slicer View for Manufacturing Fittings" width="800"/>
 
@@ -62,4 +74,10 @@ This script is licensed under the GPL 3.0 or later. For more details, see the [L
 
 ## Acknowledgement
 
-This was originally created by Cameron Brooks under the auspices of [FAST Research Group](https://www.appropedia.org/FAST) and published in [add when published]. This design uses [threadlib by Adrian Schlatter](https://github.com/adrianschlatter/threadlib) and inspiration from [Makrokaba's pipe joint generator](https://www.thingiverse.com/thing:4323468/files).
+This was originally created by Cameron Brooks under the auspices of [FAST Research Group](https://www.appropedia.org/FAST) and published in:
+
+Taherzadeh Fini, A.; Brooks, C.K.; Romani, A.; Straatman, A.G.; Pearce, J.M. Parametric Design of Easy-Connect Pipe Fitting Components Using Open-Source CAD and Fabrication Using 3D Printing. _J. Manuf. Mater. Process._ **2025**, _9_, 65. <https://doi.org/10.3390/jmmp9020065>
+
+The design is certified by the Open Source Hardware Association as [CA000069](https://certification.oshwa.org/ca000069.html).
+
+This design uses [threadlib by Adrian Schlatter](https://github.com/adrianschlatter/threadlib) and inspiration from [Makrokaba's pipe joint generator](https://www.thingiverse.com/thing:4323468/files).
