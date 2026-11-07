@@ -62,7 +62,7 @@ The paper tested printed couplings with water pressure, raised in steps of 0.345
 
 All gaskets were TPE 85 Shore A. The figures were read by hand from an analog gauge with an accuracy of ±0.138 MPa (±20 psi). That is the gauge's accuracy, not the spread between parts. The readings for each test were not kept, so the number of tests behind each figure is not known.
 
-The far end of each test coupling was closed with a capped nut and a flat 2 mm disc gasket, rather than a second pipe. These parts are on [OSF](https://osf.io/fqjxe/) as `Closedcapnutpart` and `Flatgasketpart`, and this code does not generate them. The capped nuts are the standard nuts scaled up by 2% with the hole filled. So each test loaded one tapered gasket sealing on a pipe. Which end leaked was not recorded.
+The far end of each test coupling was closed with a capped nut and a flat 2 mm disc gasket, rather than a second pipe. Set `selectedPart` to `closed_nut` or `flat_gasket` to generate them. The parts used in the tests are on [OSF](https://osf.io/fqjxe/). So each test loaded one tapered gasket sealing on a pipe. Which end leaked was not recorded.
 
 These are the highest pressures held for a few minutes by these particular parts. They are not working pressures. The tests did not cover pressure held for long periods, repeated pressure cycles, water temperature, ageing, or repeated assembly. The 20 mm coupling reached about half the pressure of the 10 mm one, so results at one size do not carry over to another. The paper compares 4.551 MPa with a 0.552 MPa residential limit, which is about eight times higher. That ratio is not a safety factor.
 
