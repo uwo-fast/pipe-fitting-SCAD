@@ -95,6 +95,9 @@ thread_height = (turns + 1) * thread_pitch;
 // -----      Design      -----
 // ----------------------------
 
+check_fitting(thread_type = thread_type_select, input_dia = input_dia, wall_thickness = wall_thickness,
+              tol_pipe = tol_pipe, tol_gasket = tol_gasket, gasket_extra_length = gasket_extra_length);
+
 if ((selectedPart == "fitting" || selectedPart == "all"))
 {
 

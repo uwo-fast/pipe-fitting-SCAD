@@ -90,6 +90,13 @@ mid_height = transition_length / 2;
 // Designators for external threads within gasket thicknesses ranges
 designators = thread_specD("ext", (input_dia + gasket_thickness_lower / 2), (input_dia + gasket_thickness_upper / 2));
 
+assert(len(designators) > 0, str("No thread has a support diameter from ", input_dia + gasket_thickness_lower / 2,
+                                 " to ", input_dia + gasket_thickness_upper / 2,
+                                 " mm. Change gasket_thickness_lower or gasket_thickness_upper."));
+assert(is_num(selectedThread) && selectedThread == floor(selectedThread) && selectedThread >= 0 &&
+           selectedThread < len(designators),
+       str("selectedThread must be a whole number from 0 to ", len(designators) - 1, ", but is ", selectedThread));
+
 if (!export)
 {
     translate([ thread_specs(designators[0])[2] * 2, thread_specs(designators[0])[2] * 2, 0 ])
@@ -137,6 +144,9 @@ if (!export)
 thread_type_select = designators[selectedThread];
 echo(str("SHOWING", "[", selectedThread, "/", len(designators), "]", ":"));
 echo(thread_type_select);
+
+check_fitting(thread_type = thread_type_select, input_dia = input_dia, wall_thickness = wall_thickness,
+              tol_pipe = tol_pipe, tol_gasket = tol_gasket, gasket_extra_length = gasket_extra_length);
 
 if (!export || (selectedPart == "fitting" || selectedPart == "all"))
 {
