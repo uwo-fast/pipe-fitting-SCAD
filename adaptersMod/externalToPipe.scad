@@ -96,8 +96,7 @@ module Adapter_External_Bare(corrector, upper_thread, upper_turns, upper_wall, u
                 else if (mid_style == "Cone")
                 {
                     translate([ 0, 0, -lower_length - mid_height / 2 - real_lower_mid_outer_chamfer ])
-                        cylinder(h = lower_length + real_lower_mid_outer_chamfer + mid_height / 2, d = lower_diameter,
-                                 center = false);
+                        cylinder(h = lower_length + real_lower_mid_outer_chamfer, d = lower_diameter, center = false);
                 }
                 else
                 {
