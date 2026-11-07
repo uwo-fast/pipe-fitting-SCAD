@@ -43,6 +43,9 @@ transition_length = 15.0;
 cap_thickness = 1.0;
 nut_wall_thickness = 2.4;
 
+// Thickness of the flat gasket used with the closed nut
+flat_gasket_thickness = 2.0;
+
 // Entry chamfer for the fitting mate
 entry_chamfer = true;
 
@@ -54,7 +57,8 @@ style = "Hexagon"; // "Hexagon", "Cone", "Circular"
 selectedThread = 5;
 
 export = true;        // when true derenders all but the selected 'selectedPart'
-selectedPart = "all"; // show the fitting, nut, gasket, or all
+selectedPart = "all"; // show the fitting, nut, gasket, closed_nut, flat_gasket, or all
+                      // closed_nut and flat_gasket close the far end of a test assembly, and are not part of all
 
 showInputPipe = false; // show the input pipe(s) for reference
 
@@ -162,6 +166,18 @@ if (!export || (selectedPart == "gasket" || selectedPart == "all"))
         generateGasket(corrector = corrector, designator = thread_type_select, mid_height = mid_height,
                        wall_thickness = wall_thickness, fudge = fudge, turns = turns, input_dia = input_dia,
                        fit_excess = gasket_extra_length, tol_gasket = tol_gasket, tol_pipe = tol_pipe);
+}
+
+if (selectedPart == "closed_nut")
+{
+    generateNut(corrector = corrector, thread_type = thread_type_select, turns = turns,
+                wall_thickness = nut_wall_thickness, entry_chamfer = entry_chamfer, style = style,
+                cap_thickness = cap_thickness, input_dia = input_dia, tol_pipe = tol_pipe, fudge = fudge, closed = true);
+}
+
+if (selectedPart == "flat_gasket")
+{
+    generateFlatGasket(thread_type = thread_type_select, thickness = flat_gasket_thickness);
 }
 
 // ----------------------------
